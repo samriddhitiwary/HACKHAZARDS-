@@ -33,8 +33,8 @@ export default function Editor() {
   }, []);
  // Add this function to your component (you can place it with your other utility functions)
  const getInlineSuggestion = async (codeSoFar) => {
-  // const OPENAI_API_KEY = process.env.REACT_APP_CHATBOT_KEY
-  // const endpoint = process.env.REACT_APP_OPENAPI
+  const OPENAI_API_KEY = process.env.REACT_APP_CHATBOT_KEY
+  const endpoint = process.env.REACT_APP_OPENAPI
 
   try {
     const response = await axios.post(
@@ -57,7 +57,7 @@ export default function Editor() {
       {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${OPENAI_API_KEY}`,
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
         },
       }
     );
