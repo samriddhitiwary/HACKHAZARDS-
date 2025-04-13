@@ -33,7 +33,7 @@ export default function Editor() {
   }, []);
  // Add this function to your component (you can place it with your other utility functions)
  const getInlineSuggestion = async (codeSoFar) => {
-  const OPENAI_API_KEY = "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"; // Replace with your OpenAI key (keep it secret in production!)
+  const OPENAI_API_KEY = ""
   const endpoint = "https://api.openai.com/v1/chat/completions";
 
   try {
