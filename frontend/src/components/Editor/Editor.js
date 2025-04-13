@@ -34,7 +34,7 @@ export default function Editor() {
  // Add this function to your component (you can place it with your other utility functions)
  const getInlineSuggestion = async (codeSoFar) => {
   // const OPENAI_API_KEY = process.env.REACT_APP_CHATBOT_KEY
-  const endpoint = process.env.REACT_APP_OPENAPI
+  // const endpoint = process.env.REACT_APP_OPENAPI
 
   try {
     const response = await axios.post(
@@ -71,54 +71,7 @@ export default function Editor() {
 };
 
 
-// Update your useEffect for inline completions to use the imported monaco
-// useEffect(() => {
-//   console.log("IN USE EFFECT")
-//   if (monaco) {
-//     console.log("IN MONACO", monaco);
-//     const myfunction = async () => {
-//       const disposable = await monaco.languages.registerInlineCompletionsProvider(language, {
-     
-//         provideInlineCompletions: async (model, position) => {
-//           console.log("PROVIDE INLINE TRIGGERED");
-//           const positionOffset = model.getOffsetAt(position);
-//           console.log("POSITION INDEX", positionOffset)
-//           const codeSoFar = model.getValue().slice(0, positionOffset);
-//           console.log("Code so far:", codeSoFar);
-  
-  
-//           const suggestion = await getInlineSuggestion(codeSoFar);
-  
-//           if (!suggestion || suggestion.trim() === "") return { items: [] };
-  
-//           return {
-//             items: [
-//               {
-//                 insertText: suggestion,
-//                 range: {
-//                   startLineNumber: position.lineNumber,
-//                   startColumn: position.column,
-//                   endLineNumber: position.lineNumber,
-//                   endColumn: position.column,
-//                 },
-//               },
-//             ],
-//           };
-//         },
-//         handleItemDidShow: () => {},
-//         freeInlineCompletions: () => {},
-//       }); 
-//       const temp = await disposable.dispose();
-//       console.log('I AM HERE ', temp);
-//       return temp;
-//       // return await disposable.dispose();
-//     }
-    
-//     const temp = myfunction();
 
-//     return () => temp;
-//   }
-// }, [language]);
 
   const handleCodeChange = (value) => {
     setCode(value);
