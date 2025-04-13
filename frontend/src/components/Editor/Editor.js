@@ -32,59 +32,93 @@ export default function Editor() {
     };
   }, []);
  // Add this function to your component (you can place it with your other utility functions)
-const getInlineSuggestion = async (codeSoFar) => {
-  console.log("GET IN LINE SUGGESTION", codeSoFar);
+ const getInlineSuggestion = async (codeSoFar) => {
+  const OPENAI_API_KEY = "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"; // Replace with your OpenAI key (keep it secret in production!)
+  const endpoint = "https://api.openai.com/v1/chat/completions";
+
   try {
-    const response = await axios.post("http://localhost:5000/ai-autocomplete", { 
-      prompt: `Suggest code completion for: ${codeSoFar}` 
-    });
-    const { aiCode } = removeFirstAndLastLine(response.data.suggestion);
-    console.log(" AI CODE", aiCode);
-    return aiCode;
+    const response = await axios.post(
+      endpoint,
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful coding assistant.",
+          },
+          {
+            role: "user",
+            content: `Suggest the next line of code for the following:\n\n${codeSoFar}`,
+          },
+        ],
+        temperature: 0.3,
+        max_tokens: 60,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+      }
+    );
+
+    const suggestion = response.data.choices[0].message.content.trim();
+    return suggestion;
   } catch (error) {
     console.error("Error fetching inline suggestion:", error);
     return "";
   }
 };
 
+
 // Update your useEffect for inline completions to use the imported monaco
-useEffect(() => {
-  console.log("IN USE EFFECT")
-  if (monaco) {
-    console.log("IN MONACO", monaco)
-    const disposable = monaco.languages.registerInlineCompletionsProvider(language, {
+// useEffect(() => {
+//   console.log("IN USE EFFECT")
+//   if (monaco) {
+//     console.log("IN MONACO", monaco);
+//     const myfunction = async () => {
+//       const disposable = await monaco.languages.registerInlineCompletionsProvider(language, {
      
-      provideInlineCompletions: async (model, position) => {
-        const positionOffset = model.getOffsetAt(position);
-        const codeSoFar = model.getValue().slice(0, positionOffset);
-        console.log("Code so far:", codeSoFar);
+//         provideInlineCompletions: async (model, position) => {
+//           console.log("PROVIDE INLINE TRIGGERED");
+//           const positionOffset = model.getOffsetAt(position);
+//           console.log("POSITION INDEX", positionOffset)
+//           const codeSoFar = model.getValue().slice(0, positionOffset);
+//           console.log("Code so far:", codeSoFar);
+  
+  
+//           const suggestion = await getInlineSuggestion(codeSoFar);
+  
+//           if (!suggestion || suggestion.trim() === "") return { items: [] };
+  
+//           return {
+//             items: [
+//               {
+//                 insertText: suggestion,
+//                 range: {
+//                   startLineNumber: position.lineNumber,
+//                   startColumn: position.column,
+//                   endLineNumber: position.lineNumber,
+//                   endColumn: position.column,
+//                 },
+//               },
+//             ],
+//           };
+//         },
+//         handleItemDidShow: () => {},
+//         freeInlineCompletions: () => {},
+//       }); 
+//       const temp = await disposable.dispose();
+//       console.log('I AM HERE ', temp);
+//       return temp;
+//       // return await disposable.dispose();
+//     }
+    
+//     const temp = myfunction();
 
-
-        const suggestion = await getInlineSuggestion(codeSoFar);
-
-        if (!suggestion || suggestion.trim() === "") return { items: [] };
-
-        return {
-          items: [
-            {
-              insertText: suggestion,
-              range: {
-                startLineNumber: position.lineNumber,
-                startColumn: position.column,
-                endLineNumber: position.lineNumber,
-                endColumn: position.column,
-              },
-            },
-          ],
-        };
-      },
-      handleItemDidShow: () => {},
-      freeInlineCompletions: () => {},
-    });
-
-    return () => disposable.dispose();
-  }
-}, [language]);
+//     return () => temp;
+//   }
+// }, [language]);
 
   const handleCodeChange = (value) => {
     setCode(value);
@@ -123,6 +157,43 @@ useEffect(() => {
     // console.log('Pankaj ', tempObject);
     return tempObject;
   };
+
+  const handleEditorMount = async (editor, monacoInstance) => {
+  handleCursorChange(editor);
+
+  editor.layout();
+
+  editor.addCommand(monacoInstance.KeyCode.Tab, () => {
+    editor.trigger("keyboard", "acceptSelectedSuggestion", {});
+  });
+
+  await monacoInstance.languages.registerInlineCompletionsProvider(language, {
+    provideInlineCompletions: async (model, position) => {
+      const positionOffset = model.getOffsetAt(position);
+      const codeSoFar = model.getValue().slice(0, positionOffset);
+      const suggestion = await getInlineSuggestion(codeSoFar);
+
+      if (!suggestion || suggestion.trim() === "") return { items: [] };
+
+      return {
+        items: [
+          {
+            insertText: suggestion,
+            range: {
+              startLineNumber: position.lineNumber,
+              startColumn: position.column,
+              endLineNumber: position.lineNumber,
+              endColumn: position.column,
+            },
+          },
+        ],
+      };
+    },
+    handleItemDidShow: () => {},
+    freeInlineCompletions: () => {},
+  });
+};
+
 
   const getAiSuggestion = async (voiceCommand) => {
     try {
@@ -207,15 +278,9 @@ useEffect(() => {
             language={language}
             value={code}
             onChange={handleCodeChange}
-            
+            onMount={handleEditorMount}
             // onMount={handleCursorChange}
-            onMount={(editor) => {
-              handleCursorChange(editor);
-              editor.layout(); 
-              editor.addCommand(monaco.KeyCode.Tab, () => {
-                editor.trigger("keyboard", "acceptSelectedSuggestion", {});
-              });
-            }}
+            
             options={{
               inlineSuggest: { enabled: true },
               quickSuggestions: true,
