@@ -1,0 +1,316 @@
+/* Container for the editor */
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Dark and Light Themes */
+.editor-container.dark {
+  background: #1e1e1e;
+  color: white;
+}
+
+.editor-container.light {
+  background: #f9f9f9;
+  color: #333;
+}
+
+.suggestions-container.dark {
+  background: #1e1e1e;
+  color: white}
+
+.suggestions-container.light {
+  background: #f9f9f9;
+  color: #333;
+}
+
+
+/* Control Panel */
+.controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.controls select,
+.controls button,
+.controls input {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  /* background-color: #fff; */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.controls select:hover,
+.controls button:hover,
+.controls input:hover {
+  border-color: #3b9ae1;
+}
+
+/* Button Styles */
+.run-button,
+.ai-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: #4CAF50; 
+  color: white; 
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  font-weight: bold;
+}
+
+
+.run-button:hover,
+.ai-button:hover {
+  background: #45a049; /* Darker green on hover */
+}
+
+/* Add text visibility for dark theme */
+.editor-container.dark .run-button,
+.editor-container.dark .ai-button {
+  color: white; /* Ensures text is white in dark mode */
+}
+
+/* Add text visibility for light theme */
+.editor-container.light .run-button,.suggestions
+.editor-container.light .ai-button {
+  color: #333; /* Ensures text is dark in light mode */
+}
+
+/* Theme button */
+.theme-toggle {
+  background: transparent;
+  color: #f39c12;
+  font-size: 24px;
+}
+
+/* Editor and Suggestions */
+.editor-ai-container {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.editor {
+  width: 100%;
+  height: 70vh;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.suggestions pre {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 16px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.listen-button {
+  background: #4CAF50;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.listen-button:hover {
+  background: #45a049;
+}
+
+/* Output Container */
+.output-container {
+  background: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.terminal {
+  background: black;
+  color: white;
+  padding: 20px;
+  font-family: monospace;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.editor-container.light .output-container {
+  background: #fff;
+}
+
+.editor-container.light .terminal {
+  background: #f4f4f4;
+  color: #333;
+}
+
+/* Transitions */
+.editor-container {
+  transition: background 0.3s ease, color 0.3s ease;
+}  
+
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modal Header */
+.modal-content h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+/* Input Area */
+.modal-content input {
+  width: 90%;
+  height: 50%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Button Styles */
+.modal-content button {
+  padding: 12 px 30px;
+  font-size: 16px;
+  background: #4CAF50;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover and Click Effects on Button */
+.modal-content button:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+.modal-content button:active {
+  transform: translateY(2px);
+}
+
+/* Button Icon */
+.modal-content button .icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Close Button for Modal */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+/* Dark Mode Modal */
+.editor-container.dark .modal-content {
+  background: #0cbd8c;
+  color: white;
+}
+
+.editor-container.dark .modal-content input {
+  background: #444;
+  color: white;
+}
+
+.editor-container.dark .modal-content button {
+  background: #de0d07;
+}
+
+
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, pointer-events 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
