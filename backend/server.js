@@ -141,21 +141,21 @@ app.post("/run", (req, res) => {
 });
 
 
-const getInlineSuggestion = async (currentCode) => {
+const getInlineSuggestion = async (codeSoFar) => {
+  console.log("Fetching AI Suggestion for:", codeSoFar); // Debug log
   try {
-    const response = await axios.post("http://localhost:5000/ai-autocomplete", {
-      prompt: `Continue the next line for:\n${currentCode}`
+    const response = await axios.post("http://localhost:5000/ai-autocomplete", { 
+      prompt: `Suggest next(only next one line) line code completion for : ${codeSoFar}` 
     });
-
-    const suggestion = response.data?.suggestion || "";
-    const lines = suggestion.split("```")[1]?.split("\n") || [];
-    lines.shift(); // remove language line
-    return lines[0] || "";
-  } catch (err) {
-    console.error("AI Inline Suggestion Error:", err);
+    console.log("AI Suggestion Response:", response.data); // Debug log
+    const { aiCode } = removeFirstAndLastLine(response.data.suggestion);
+    return aiCode;
+  } catch (error) {
+    console.error("Error fetching inline suggestion:", error);
     return "";
   }
 };
+
 
 
 // Real-time Collaboration

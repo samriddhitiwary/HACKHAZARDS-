@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import MonacoEditor from "@monaco-editor/react";
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import axios from "axios";
 import { MdLightMode, MdDarkMode, MdClose } from "react-icons/md";
 import VoiceInput from "../VoiceInput/VoiceInput";
@@ -30,6 +31,60 @@ export default function Editor() {
       socket.off("updateCursors");
     };
   }, []);
+ // Add this function to your component (you can place it with your other utility functions)
+const getInlineSuggestion = async (codeSoFar) => {
+  console.log("GET IN LINE SUGGESTION", codeSoFar);
+  try {
+    const response = await axios.post("http://localhost:5000/ai-autocomplete", { 
+      prompt: `Suggest code completion for: ${codeSoFar}` 
+    });
+    const { aiCode } = removeFirstAndLastLine(response.data.suggestion);
+    console.log(" AI CODE", aiCode);
+    return aiCode;
+  } catch (error) {
+    console.error("Error fetching inline suggestion:", error);
+    return "";
+  }
+};
+
+// Update your useEffect for inline completions to use the imported monaco
+useEffect(() => {
+  console.log("IN USE EFFECT")
+  if (monaco) {
+    console.log("IN MONACO", monaco)
+    const disposable = monaco.languages.registerInlineCompletionsProvider(language, {
+     
+      provideInlineCompletions: async (model, position) => {
+        const positionOffset = model.getOffsetAt(position);
+        const codeSoFar = model.getValue().slice(0, positionOffset);
+        console.log("Code so far:", codeSoFar);
+
+
+        const suggestion = await getInlineSuggestion(codeSoFar);
+
+        if (!suggestion || suggestion.trim() === "") return { items: [] };
+
+        return {
+          items: [
+            {
+              insertText: suggestion,
+              range: {
+                startLineNumber: position.lineNumber,
+                startColumn: position.column,
+                endLineNumber: position.lineNumber,
+                endColumn: position.column,
+              },
+            },
+          ],
+        };
+      },
+      handleItemDidShow: () => {},
+      freeInlineCompletions: () => {},
+    });
+
+    return () => disposable.dispose();
+  }
+}, [language]);
 
   const handleCodeChange = (value) => {
     setCode(value);
@@ -56,16 +111,7 @@ export default function Editor() {
     const filterSuggestion = item.toLowerCase().includes("the") || item.toLowerCase().includes(" is ") || item.toLowerCase().includes(" will ") || item.toLowerCase().includes(" a ") || item.toLowerCase().includes(" be ")|| item.includes("```") ;
     return filterSuggestion;
   }
-  // const removeFirstAndLastLine = (textBlock) => {
-  //   let array = textBlock.split("\n");
-
-  //   let arrayPureCode = array.filter(item => !(filterSuggestion(item) ));
-  //   let arraySuggestions = array.filter(item => (filterSuggestion(item)));
-  //   let tempObject = {"aiCode": arrayPureCode.join('\n'), "aiSuggestion": arraySuggestions.join('\n')};
-  //   console.log('Pankaj ', tempObject);
-  //   return tempObject;
-  // };
-
+  
     const removeFirstAndLastLine = (textBlock) => {
     let array = textBlock.split("```");
 
@@ -161,7 +207,21 @@ export default function Editor() {
             language={language}
             value={code}
             onChange={handleCodeChange}
-            onMount={handleCursorChange}
+            
+            // onMount={handleCursorChange}
+            onMount={(editor) => {
+              handleCursorChange(editor);
+              editor.layout(); 
+              editor.addCommand(monaco.KeyCode.Tab, () => {
+                editor.trigger("keyboard", "acceptSelectedSuggestion", {});
+              });
+            }}
+            options={{
+              inlineSuggest: { enabled: true },
+              quickSuggestions: true,
+              suggestOnTriggerCharacters: true,
+              acceptSuggestionOnCommitCharacter: true,
+            }}
           />
         </div>
 
