@@ -33,7 +33,8 @@ export default function Editor() {
   }, []);
  // Add this function to your component (you can place it with your other utility functions)
  const getInlineSuggestion = async (codeSoFar) => {
-  
+  // const OPENAI_API_KEY = process.env.REACT_APP_CHATBOT_KEY
+  // const endpoint = process.env.REACT_APP_OPENAPI
 
   try {
     const response = await axios.post(
@@ -47,7 +48,7 @@ export default function Editor() {
           },
           {
             role: "user",
-            content: `Suggest the next line of code for the following:\n\n${codeSoFar}`,
+            content: `Suggest the next line of code(only give the code no text or explaination just pure line of codes) for the following:\n\n${codeSoFar}`,
           },
         ],
         temperature: 0.3,
