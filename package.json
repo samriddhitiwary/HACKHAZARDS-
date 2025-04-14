@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "monaco-editor": "^0.52.2",
     "react-monaco-editor": "^0.58.0"
   }
