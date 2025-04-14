@@ -179,31 +179,70 @@
 
 
 /* Modal Overlay */
+/* Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
-  transition: all 0.3s ease;
+  z-index: 999;
+  transition: opacity 0.3s ease;
 }
 
 /* Modal Content */
 .modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
-  width: 320px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #00ffe7, #8e2de2, #ff6ec4, #00ffe7);
+  background-size: 400% 400%;
+  border-radius: 1.5rem;
+  z-index: -1;
+  animation: borderAnimate 10s ease infinite;
 }
 
+@keyframes borderAnimate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glowing Button */
+.modal-content button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: black;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(67, 233, 123, 0.4);
+}
 /* Fade-in Animation */
 @keyframes fadeIn {
   from {
@@ -216,47 +255,63 @@
   }
 }
 
-/* Modal Header */
+/* Header */
 .modal-content h2 {
-  font-size: 22px;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 20px;
-  color: #ffffff;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-/* Input Area */
+/* Input Field */
 .modal-content input {
-  width: 90%;
-  height: 50%;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 8px;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
   border: 1px solid #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   outline: none;
   transition: all 0.3s ease;
+  height: 60px; 
 }
+
+.modal-content textarea {
+  width: 90%;
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+  outline: none;
+  resize: vertical;
+  transition: all 0.3s ease;
+  min-height: 150px; 
+  max-height: 250px; 
+}
+
+
 
 .modal-content input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
 }
 
-/* Button Styles */
+/* Submit Button */
 .modal-content button {
-  padding: 12 px 30px;
-  font-size: 16px;
-  background: #4CAF50;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: #4caf50;
   color: white;
-  border-radius: 8px;
+  border: none;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover and Click Effects on Button */
 .modal-content button:hover {
   background: #45a049;
   transform: translateY(-2px);
@@ -268,17 +323,17 @@
 
 /* Button Icon */
 .modal-content button .icon {
-  margin-right: 10px;
-  font-size: 18px;
+  margin-right: 8px;
+  font-size: 1.2rem;
 }
 
-/* Close Button for Modal */
+/* Close Icon */
 .close-modal {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  color: #888;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  color: #aaa;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -287,10 +342,33 @@
   color: #333;
 }
 
-/* Dark Mode Modal */
+/* Dark Mode Support */
 .editor-container.dark .modal-content {
+  background: #1e1e1e;
+  color: #f1f1f1;
+}
+
+.editor-container.dark .modal-content h2 {
+  color: #ffffff;
+}
+
+.editor-container.dark .modal-content input {
+  background-color: #2a2a2a;
+  color: #f1f1f1;
+  border-color: #555;
+}
+
+.editor-container.dark .modal-content input:focus {
+  border-color: #80e6c1;
+  box-shadow: 0 0 8px rgba(0, 255, 170, 0.5);
+}
+
+.editor-container.dark .modal-content button {
   background: #0cbd8c;
-  color: white;
+}
+
+.editor-container.dark .modal-content button:hover {
+  background: #0aa376;
 }
 
 .editor-container.dark .modal-content input {

@@ -203,7 +203,7 @@ export default function Editor() {
           <div className="modal-content">
             <MdClose className="close-modal" onClick={handleCloseModal} />
             <h2>Ask AI for Suggestions</h2>
-            <input
+            <textarea
               type="text"
               id="userInput"
               value={userInputText}
