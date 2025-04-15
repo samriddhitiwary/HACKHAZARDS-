@@ -73,8 +73,8 @@ An intelligent, collaborative AI-powered code editor featuring real-time code su
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/samriddhitiwary/HACKHAZARDS-.git
-cd HACKHAZARDS
+git clone https://github.com/samriddhitiwary/AIEditorX.git
+cd AIEditorX
 ```
 
 2. Backend Setup (Port: 5000)
