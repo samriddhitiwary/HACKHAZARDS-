@@ -1,70 +1,106 @@
-# ⚡ AI Code Editor with Groq API — HACKHAZARDS
+# 🚀 AIEditorX — Smart Collaborative Code Editor
 
-An intelligent, collaborative AI-powered code editor featuring real-time code suggestions, voice-command debugging, syntax highlighting, screen sharing, and live cursors — built for the future of pair programming.
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Powered_by-Groq_API-blueviolet?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Voice_Command-Enabled-success?style=flat-square"/>
-  <img src="https://img.shields.io/badge/Live_Sharing-Built_in-orange?style=flat-square"/>
-</p>
+> Redefining how we write and debug code using AI, real-time voice commands, and live collaboration.
 
 ---
 
-## 🚀 Features
+## 📌 Problem Statement
 
-### 💡 AI Auto Code Prediction
-- Predicts next line(s) of code using **Groq API**.
-- Provides intelligent completions and short, helpful explanations.
-- Integrated seamlessly with the editor.
+**Problem Statement 1 - Weave Al magic with Groq**
 
-### 🎨 Syntax Highlighting & Code Styling
-- Displays line numbers, keyword-based coloring, and indentation.
-- Highlights syntax errors in red for quick debugging.
-- Helps with cleaner, structured, and readable code.
-
-### 🎙️ AI Voice Assistant (Voice + Text)
-- Speak or type commands to:
-  - Generate new code
-  - Debug existing logic
-- Built using Web Speech API for real-time voice recognition.
-
-### 🧠 Hover Tooltips for Code Hints
-- Hover over programming keywords to see:
-  - Descriptions
-  - Syntax
-  - Quick examples
-
-### 🖥️ Screen Sharing + Live Cursor (Real-Time Collaboration)
-- **Share your screen** and collaborate with others in real time.
-- **Live cursor tracking** shows your teammate’s activity as they code.
-- Enhances collaboration during coding sessions, interviews, or mentoring.
-
-> ✅ *Code for screen sharing and live cursor is implemented. Deployment in progress.*
+Empower rural and urban developers to build smarter, collaborative, and AI-driven coding environments.
 
 ---
 
-## 📁 Folder Structure
+## 🎯 Objective
 
+AIEditorX aims to simplify code writing, debugging, and learning through:
+- Intelligent code prediction using Groq API.
+- AI-assisted voice and text interaction.
+- Real-time collaboration via live cursor tracking and screen sharing.
+- Hover-based code documentation and smart syntax highlighting.
+
+It serves students, developers, educators, and collaborative teams working remotely or in learning environments.
+
+---
+
+## 🧠 Team & Approach
+
+### Team Name:  
+``
+
+### Team Members:  
+- **Samriddhi Tiwary** ([GitHub](https://github.com/samriddhitiwary)) 
+
+### Our Approach:
+- Chose this problem to democratize intelligent development tools for all levels.
+- Integrated Groq for high-speed inference.
+- Built a robust voice assistant for generating/debugging code.
+- Prioritized collaboration tools (screen sharing, live cursor) for real-time teamwork.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React, CodeMirror, Web Speech API, Socket.IO
-- **Backend**: Node.js, Express
-- **AI Engine**: Groq API (OpenAI-compatible)
-- **Desktop App**: Electron
-- **Live Collab**: WebRTC, Socket.IO
-- **Syntax & Parsing**: ESLint, Prettier
+### Core Technologies Used:
+- **Frontend:** React.js, CodeMirror, Web Speech API, Tailwind CSS  
+- **Backend:** Node.js, Express.js, Axios  
+- **Database:** N/A  
+- **APIs:** Groq API (OpenAI-compatible), Web Speech API  
+- **Hosting:**
+
+### Sponsor Technologies Used:
+- ✅ **Groq:** Used for real-time AI code generation and debugging  
+- [ ] **Monad:**  
+- [ ] **Fluvio:**  
+- [ ] **Base:**  
+- [ ] **Screenpipe:** 
+- [ ] **Stellar:**  
+*(Mark with ✅ as you integrate)*
 
 ---
 
-## ✅ Prerequisites
+## ✨ Key Features
 
-- Node.js (v18 or higher)
-- npm (or yarn)
-- Groq API Key ([Get it here](https://console.groq.com))
-- (Optional) Electron installed globally for desktop build
+- ✅ **AI Auto Code Prediction** – Get intelligent code completions with brief explanation (Groq API)  
+- ✅ **Syntax Highlighting & Error Display** – Line numbers, color coding, and red lines for syntax errors  
+- ✅ **AI Voice Assistant** – Debug or generate code using text or voice input  
+- ✅ **Hover Tooltips** – See syntax hints and documentation on hover  
+- ✅ **Live Cursor Sharing** – See your teammate’s cursor movements in real time  
+- ✅ **Screen Sharing** – Collaborate visually with integrated screen sharing  
+- ✅ **Electron App Support** – Use AIEditorX as a standalone desktop application  
+
+---
+
+## 📽️ Demo & Deliverables
+
+- **Demo Video Link:** [Insert YouTube/Loom link]  
+- **Pitch Deck / PPT Link:** [Insert Google Slides/PDF link]  
+
+---
+
+## ✅ Tasks & Bonus Checklist
+
+- [ ] **Followed at least 2 of our social channels + form filled**  
+- [ ] **Bonus Task 1 – Shared badge + form filled (2 points)**  
+- [ ] **Bonus Task 2 – Sprint.dev sign-up + form filled (3 points)**  
+
+*(Mark with ✅ once done)*
+
+---
+
+## 🧪 How to Run the Project
+
+### Requirements:
+- Node.js (v18+)
+- npm or yarn
+- Groq API Key
+- Electron (optional for desktop build)
+
+---
+
+### 🔧 Folder Structure
+
 
 ---
 
